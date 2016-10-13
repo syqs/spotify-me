@@ -1,9 +1,14 @@
-var m = require('mithril')
+import React from 'react';
 
-exports.controller = function (options) {}
-
-exports.view = function (ctrl, options) {
-  return m('.my-component', [
-    m('h2', options.title)
-  ])
+export default class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div className="my-component">
+        <h2>{this.props.title}</h2>
+      </div>
+    );
+  }
 }
