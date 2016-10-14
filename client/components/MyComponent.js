@@ -1,20 +1,31 @@
 import React from 'react';
 import Search from './AutoComplete';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import Albums from './Albums';
 
 export default class MyComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artists: []
+      artists: [],
+      chosenArtistId: ''
     };
-    this.updateArtists = e => this.updateArtistArray(e)
+    this.updateArtists = e => this.updateArtistArray(e);
   }
 
   updateArtistArray(artists) {
     let thiz = this;
     console.log("main state ar", artists)
     thiz.setState({artists: artists})
+  }
+
+  getLocation(){
+    let loc = location.href;
+    loc = loc.slice(loc.indexOf('4000/')+5)
+    console.log("this is loc, ",loc)
+  }
+
+  componentDidMount(){
+    this.getLocation();
   }
 
   render() {

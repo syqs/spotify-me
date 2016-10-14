@@ -4,7 +4,9 @@ import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
 import fetch              from 'isomorphic-fetch';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { browserHistory } from 'react-router'
 
+// Handles 300 millisecond delay on touch events
 injectTapEventPlugin();
 
 const spotyfySearch = `https://api.spotify.com/v1/search?q=`;
@@ -15,8 +17,7 @@ class Search extends Component {
     this.onUpdateInput = this.onUpdateInput.bind(this);
     this.state = {
       dataSource : [],
-      inputValue : '',
-      fullInfo: []
+      inputValue : ''
     };
     this.newRequest = e => this.onNewRequest(e)
   }
@@ -35,7 +36,8 @@ class Search extends Component {
     console.log("search term", searchTerm);
     let artist = thiz.props.artists.filter(artist => artist.name.toLowerCase() === searchTerm.toLowerCase())
     console.log("artist from array, ", artist)
-    alert(artist[0].id);
+    localStorage.setItem("artistId", artist[0].id)
+    browserHistory.push('/albums')
   }
 
   performSearch() {
