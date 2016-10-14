@@ -5,6 +5,7 @@ import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
 import fetch              from 'isomorphic-fetch';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { browserHistory } from 'react-router'
+import { fetchArtists } from '../models/SpotApi'
 
 // Handles 300 millisecond delay on touch events
 injectTapEventPlugin();
@@ -19,44 +20,40 @@ class Search extends Component {
       dataSource : [],
       inputValue : ''
     };
-    this.newRequest = e => this.onNewRequest(e)
+    this.newRequest = e => this.onNewRequest(e);
   }
 
+  // Updated the state with input values
   onUpdateInput(inputValue) {
     const thiz = this;
     this.setState({
       inputValue: inputValue
     }, function() {
-      thiz.performSearch()
+      thiz.performSearch();
     });
   }
 
+  // Runs after user selects the artist from the dropdown
   onNewRequest(searchTerm) {
     const thiz = this;
-    console.log("search term", searchTerm);
-    let artist = thiz.props.artists.filter(artist => artist.name.toLowerCase() === searchTerm.toLowerCase())
-    console.log("artist from array, ", artist)
-    localStorage.setItem("artistId", artist[0].id)
-    browserHistory.push('/albums')
+    let artist = thiz.props.artists.filter(artist => artist.name.toLowerCase() === searchTerm.toLowerCase());
+    localStorage.setItem("artistId", artist[0].id);
+    browserHistory.push('/albums');
   }
 
+  // Call Spotify API to get all the artists that contain letters typed in
   performSearch() {
     const
       thiz = this,
       url  = spotyfySearch + this.state.inputValue + '&type=artist&limit=10';
 
     if(this.state.inputValue !== '') {
-      fetch(url)
-        .then(function(response) {
-          if (response.status >= 400) {
-            throw new Error("Bad response from server");
-          }
-          return response.json();
-        })
+      fetchArtists(url)
         .then(function(res) {
           let artistsName;
           let data = res.artists.items;
-          console.log('this is data: ', data)
+
+          // Map artists from the API call into an array and set the state in the main component
           artistsName = data.map(result => result.name );
           thiz.setState({
             dataSource: artistsName
@@ -70,9 +67,12 @@ class Search extends Component {
   }
 
   render() {
+
+    // Use material desing component for UI rendering
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
       <AutoComplete
-        hintText = "Start typing artists name"
+        className     = "theSearch" 
+        hintText      = "Start typing artists name"
         dataSource    = {this.state.dataSource}
         onUpdateInput = {this.onUpdateInput} 
         onNewRequest  = {this.newRequest} 

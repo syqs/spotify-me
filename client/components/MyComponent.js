@@ -1,6 +1,9 @@
 import React from 'react';
 import Search from './AutoComplete';
 import Albums from './Albums';
+import getMuiTheme        from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
+import { Button, ButtonToolbar, Grid, Row, Col } from 'react-bootstrap';
 
 export default class MyComponent extends React.Component {
   constructor(props) {
@@ -14,26 +17,21 @@ export default class MyComponent extends React.Component {
 
   updateArtistArray(artists) {
     let thiz = this;
-    console.log("main state ar", artists)
-    thiz.setState({artists: artists})
-  }
-
-  getLocation(){
-    let loc = location.href;
-    loc = loc.slice(loc.indexOf('4000/')+5)
-    console.log("this is loc, ",loc)
-  }
-
-  componentDidMount(){
-    this.getLocation();
+    thiz.setState({artists: artists});
   }
 
   render() {
     return (
-      <div className="container">
-      <h2>Welcome to the only spotify app you will ever need!</h2>
-        <Search upArtists={this.updateArtists} artists={this.state.artists}/> 
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>    
+      <Grid>
+        <Row className="show-grid"> 
+          <div className="container">
+            <h2>Welcome to the only spotify app you will ever need!</h2>
+            <Search upArtists={this.updateArtists} artists={this.state.artists}/> 
+          </div>
+        </Row>
+      </Grid>
+    </MuiThemeProvider>
     );
   }
 } 

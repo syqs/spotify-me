@@ -1,10 +1,38 @@
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+@mixin cover-background($img-uri, $background-top:"center", $background-left:"center", $background-attachment:"fixed") 
+  background: url($img-uri) no-repeat unquote($background-top) unquote($background-left) unquote($background-attachment); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;  
+
+$path--rel    : "../images"
 $primary-color: #3bbfce
+$black		  : #000000
+
 
 h2
     color: $primary-color
 
-.col-4 
-	width: 20%
-	float: left;
-	height: 400px;
-	clearfix: both;
+.theSearch
+	color: #ffffff
+
+.albums
+	padding: 15px 15px 15px 15px
+	margin: 15px 10px 20px 0px
+	min-height: 245px
+
+.albumDetails
+	margin: 20px 20px 20px 10px
+
+.albumName
+	width: 100%
+	text-align: left
+	float: left
+
+.imgur 
+    max-width: 100px
+    max-height: 100px
+
+    
