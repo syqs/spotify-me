@@ -9,7 +9,6 @@ Technologies used: ReactJS, Bootstrap, Material-UI, Node, Express, SASS
 
 
 Installation:
-npm install
-npm start
+$ npm install && npm start
 
 localhost:4000/
